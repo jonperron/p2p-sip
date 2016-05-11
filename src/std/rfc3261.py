@@ -254,7 +254,8 @@ class Message(object):
             firstheaders, body = value, '' # assume no body
         try: firstline, headers = firstheaders.split('\n', 1)
         except: raise ValueError, 'No first line found'
-        if firstline[-1] == '\r': firstline = firstline[:-1]
+        try: if firstline[-1] == '\r': firstline = firstline[:-1]
+		except: raise ValueError,'Empty string sent'
         a, b, c = firstline.split(' ', 2)
         try:    # try as response
             self.response, self.responsetext, self.protocol = int(b), c, a # throws error if b is not int.
